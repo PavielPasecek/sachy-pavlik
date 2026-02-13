@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ŠACH MAT</title>
+    <style>
+        :root {
+            /* Dramatické barvy */
+            --bg-color: #1a1a1a;
+            --board-border: #4a0000;
+            --light-tile: #dcdcdc;
+            --dark-tile: #333;
+            --danger-color: #ff0000; /* Barva matu */
+            --text-glow: 0 0 10px rgba(255, 0, 0, 0.8);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--bg-color);
+            font-family: 'Courier New', Courier, monospace;
+            color: white;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--danger-color);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: var(--text-glow);
+            animation: fadeIn 2s ease-in;
+        }
+
+        .chessboard {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+            border: 10px solid var(--board-border);
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .tile {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 45px;
+            cursor: default;
+        }
+
+        /* Barvení políček */
+        .tile:nth-child(16n + 2), .tile:nth-child(16n + 4), .tile:nth-child(16n + 6), .tile:nth-child(16n + 8),
+        .tile:nth-child(16n + 9), .tile:nth-child(16n + 11), .tile:nth-child(16n + 13), .tile:nth-child(16n + 15) {
+            background-color: var(--dark-tile);
+            color: white; /* Černé figury na tmavém poli budou bílé (invertované pro kontrast) nebo standardní */
+        }
+
+        .tile:not(:nth-child(16n + 2)):not(:nth-child(16n + 4)):not(:nth-child(16n + 6)):not(:nth-child(16n + 8))
+        :not(:nth-child(16n + 9)):not(:nth-child(16n + 11)):not(:nth-child(16n + 13)):not(:nth-child(16n + 15)) {
+            background-color: var(--light-tile);
+        }
+
+        /* --- Figury --- */
+        .white-piece { 
+            color: #fff; 
+            text-shadow: 1px 1px 2px #000;
+            filter: drop-shadow(0 0 2px white);
+        }
+        .black-piece { 
+            color: #000;
+            text-shadow: 0 0 1px #fff;
+        }
+
+        /* --- Efekt MATU --- */
+        .mate-square {
+            background-color: var(--danger-color) !important;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: inset 0 0 0px red; }
+            50% { box-shadow: inset 0 0 20px #500000; background-color: #ff3333; }
+            100% { box-shadow: inset 0 0 0px red; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Responsivita */
+        @media (max-width: 550px) {
+            .chessboard {
+                grid-template-columns: repeat(8, 1fr);
+                grid-template-rows: repeat(8, 1fr);
+                width: 90vw;
+                height: 90vw;
+            }
+            .tile { font-size: 10vw; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>ŠACH MAT!</h1>
+
+    <div class="chessboard">
+        <div class="tile"><span class="black-piece">&#9820;</span></div> <div class="tile"><span class="black-piece">&#9822;</span></div> <div class="tile"><span class="black-piece">&#9821;</span></div> <div class="tile"><span class="black-piece">&#9819;</span></div> <div class="tile mate-square"><span class="black-piece">&#9818;</span></div> <div class="tile"><span class="black-piece">&#9821;</span></div> <div class="tile"><span class="black-piece">&#9822;</span></div> <div class="tile"><span class="black-piece">&#9820;</span></div> <div class="tile"><span class="black-piece">&#9823;</span></div>
+        <div class="tile"><span class="black-piece">&#9823;</span></div>
+        <div class="tile"><span class="black-piece">&#9823;</span></div>
+        <div class="tile"><span class="black-piece">&#9823;</span></div>
+        <div class="tile"></div> <div class="tile"><span class="white-piece">&#9813;</span></div> <div class="tile"><span class="black-piece">&#9823;</span></div>
+        <div class="tile"><span class="black-piece">&#9823;</span></div>
+
+        <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+        <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+
+        <div class="tile"></div><div class="tile"></div>
+        <div class="tile"><span class="white-piece">&#9815;</span></div> <div class="tile"></div><div class="tile"><span class="black-piece">&#9823;</span></div> <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+
+        <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+        <div class="tile"><span class="white-piece">&#9817;</span></div> <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+
+        <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+        <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+
+        <div class="tile"><span class="white-piece">&#9817;</span></div>
+        <div class="tile"><span class="white-piece">&#9817;</span></div>
+        <div class="tile"><span class="white-piece">&#9817;</span></div>
+        <div class="tile"><span class="white-piece">&#9817;</span></div>
+        <div class="tile"></div> <div class="tile"><span class="white-piece">&#9817;</span></div>
+        <div class="tile"><span class="white-piece">&#9817;</span></div>
+        <div class="tile"><span class="white-piece">&#9817;</span></div>
+
+        <div class="tile"><span class="white-piece">&#9814;</span></div>
+        <div class="tile"><span class="white-piece">&#9816;</span></div>
+        <div class="tile"></div> <div class="tile"></div> <div class="tile"><span class="white-piece">&#9812;</span></div> <div class="tile"><span class="white-piece">&#9815;</span></div>
+        <div class="tile"><span class="white-piece">&#9816;</span></div>
+        <div class="tile"><span class="white-piece">&#9814;</span></div>
+    </div>
+
+</body>
+</html>
